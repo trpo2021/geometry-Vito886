@@ -19,4 +19,7 @@ int main()
         }
         list.push_back(s);
     }
+    for (i = 0; i < list.size(); i++) {
+        cout << list[i] << endl;
+    }
 }
