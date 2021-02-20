@@ -36,7 +36,15 @@ void triangle(string& s)
             if (s[i] == 32 || s[i] == 44 || s[i] == 41) // если это пробел || запятая || скобка, значит перед этим было число
             {
                 mas[k] = stod(t);
-
+                k++;
+                if (k == T) // если это последний элемент массива
+                {
+                    // выводим массив с параметрами и выходим из процедуры
+                    for (int i = 0; i < T; i++)
+                        cout << mas[i] << " ";
+                    cout << endl;
+                    return;
+                }
             }
             if ((s[i] < 47 || s[i]>58) && (s[i] != 45 && s[i] != 46)) // если это не цифра, минус или точка
             {
@@ -50,7 +58,7 @@ void triangle(string& s)
 
 int main()
 {
-    setlocale(LC_ALL, "RUSSIAN");
+    setlocale(LC_CTYPE, "RUSSIAN");
     vector <string> list;
     string s;
     int i;
