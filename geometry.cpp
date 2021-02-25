@@ -36,6 +36,18 @@ void error(int code, int position)
     }
 }
 
+string figName(string& s)
+{
+    string name = "";
+
+    for (int i = 0; i < size(s); i++) {
+        s[i] = tolower(s[i]); // приводим к строчному регистру
+    }
+
+    int end = s.find("(");
+    name.append(s, 0, end);
+    return name;
+}
 
 int main()
 {
