@@ -49,6 +49,82 @@ string figName(string& s)
     return name;
 }
 
+vector<float> circleCoords(string& str)
+{
+    string s = str, elem;
+
+    vector<float> ccoords;
+    int start = s.find("("), end = s.find(")"), count = 0, pos = 8;
+
+    if (end == -1) {
+        error(3, s.length() - 1);
+        ccoords.clear();
+        return ccoords;
+    }
+
+    string tempMas = "";
+    tempMas.append(s, start);
+
+    if (tempMas[0] == '(') {
+        tempMas.erase(0, 1);
+    } else {
+        error(5, 8);
+        ccoords.clear();
+        return ccoords;
+    }
+    int length = tempMas.length();
+    for (int i = 0; i < length; i++) {
+        elem = "";
+        if (count < 2) {
+            if (((tempMas[i] < 48) || (tempMas[i] > 57)) && (tempMas[i] != 32)
+                && (tempMas[i] != 44) && (tempMas[i] != 45)
+                && (tempMas[i] != 46)) {
+                error(2, pos);
+                ccoords.clear();
+                return ccoords;
+            }
+            if (tempMas[i] == ' ') {
+                elem.append(tempMas, 0, i);
+                ccoords.push_back(stof(elem));
+                tempMas.erase(0, i + 1);
+                length = tempMas.length();
+                i = 0;
+                count++;
+                pos++;
+            }
+            if (tempMas[i] == ',') {
+                elem.append(tempMas, 0, i);
+                ccoords.push_back(stof(elem));
+                tempMas.erase(0, i + 2);
+                length = tempMas.length();
+                i = 0;
+                count++;
+                pos += 2;
+            }
+        } else if (count == 2) {
+            if (end != -1) {
+                elem.append(tempMas, 0, end);
+                ccoords.push_back(stof(elem));
+                tempMas.erase(0, end + 1);
+                length = tempMas.length();
+                i = 0;
+                count++;
+            } else {
+                error(3, pos);
+                ccoords.clear();
+                return ccoords;
+            }
+        } else {
+            error(4, str.find(")") + 1);
+            ccoords.clear();
+            return ccoords;
+        }
+        pos++;
+    }
+
+    return ccoords;
+}
+
 int main()
 {
     setlocale(LC_CTYPE, "Russian");
