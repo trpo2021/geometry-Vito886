@@ -176,13 +176,21 @@ vector<float> triangleCoords(string& str)
             }
             if (tempMas[i] == ' ') 
             {
-                elem += tempMas.substr(0, i);
-                tcoords.push_back(stof(elem));
-                tempMas.erase(0, i + 1);
-                length = tempMas.length();
-                i = 0;
-                count++;
-                pos++;
+                if (tempMas[i + 1] == ' ')
+                {
+                    pos++;
+                } 
+                else
+                {
+                    elem += tempMas.substr(0, i);
+                    tcoords.push_back(stof(elem));
+                    tempMas.erase(0, i + 1);
+                    length = tempMas.length();
+                    i = 0;
+                    count++;
+                    pos++;
+                }
+                
             }
             if (tempMas[i] == ',') 
             {
