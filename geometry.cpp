@@ -58,7 +58,8 @@ vector<float> circleCoords(string& str)
     vector<float> ccoords;
     int start = s.find("("), end = s.find(")"), count = 0, pos = 8;
 
-    if (end == -1) {
+    if (end == -1) 
+    {
         error(3, s.length() - 1);
         ccoords.clear();
         return ccoords;
@@ -70,7 +71,9 @@ vector<float> circleCoords(string& str)
     if (tempMas[0] == '(') 
     {
         tempMas.erase(0, 1);
-    } else {
+    } 
+    else
+    {
         error(5, 8);
         ccoords.clear();
         return ccoords;
@@ -79,7 +82,8 @@ vector<float> circleCoords(string& str)
     for (int i = 0; i < length; i++) 
     {
         elem = "";
-        if (count < 2) {
+        if (count < 2) 
+        {
             if (((tempMas[i] < 48) || (tempMas[i] > 57)) && (tempMas[i] != 32)
                 && (tempMas[i] != 44) && (tempMas[i] != 45)
                 && (tempMas[i] != 46)) 
@@ -90,13 +94,20 @@ vector<float> circleCoords(string& str)
             }
             if (tempMas[i] == ' ') 
             {
-                elem += tempMas.substr(0, i);
-                ccoords.push_back(stof(elem));
-                tempMas.erase(0, i + 1);
-                length = tempMas.length();
-                i = 0;
-                count++;
-                pos++;
+                if (tempMas[i + 1] == ' ') 
+                {
+                    pos++;
+                } 
+                else
+                {
+                    elem += tempMas.substr(0, i);
+                    ccoords.push_back(stof(elem));
+                    tempMas.erase(0, i + 1);
+                    length = tempMas.length();
+                    i = 0;
+                    count++;
+                    pos++;
+                }
             }
             if (tempMas[i] == ',') 
             {
@@ -108,7 +119,8 @@ vector<float> circleCoords(string& str)
                 count++;
                 pos += 2;
             }
-        } else if (count == 2) 
+        } 
+        else if (count == 2) 
         {
             if (end != -1) 
             {
@@ -134,7 +146,6 @@ vector<float> circleCoords(string& str)
         }
         pos++;
     }
-
     return ccoords;
 }
 
@@ -143,7 +154,8 @@ vector<float> triangleCoords(string& str)
     string s = str, elem;
     vector<float> tcoords;
     int start = s.find("(("), end = s.find("))"), count = 0, pos = 10;
-    if (end == -1) {
+    if (end == -1) 
+    {
         error(3, s.length() - 1);
         tcoords.clear();
         return tcoords;
@@ -155,7 +167,9 @@ vector<float> triangleCoords(string& str)
     if ((tempMas[0] == '(') && (tempMas[1] == '(')) 
     {
         tempMas.erase(0, 2);
-    } else {
+    } 
+    else 
+    {
         error(5, 8);
         tcoords.clear();
         return tcoords;
@@ -189,8 +203,7 @@ vector<float> triangleCoords(string& str)
                     i = 0;
                     count++;
                     pos++;
-                }
-                
+                } 
             }
             if (tempMas[i] == ',') 
             {
@@ -202,23 +215,27 @@ vector<float> triangleCoords(string& str)
                 count++;
                 pos += 2;
             }
-        } else if (count == 7) 
+        } 
+        else if (count == 7) 
         {
             int end = tempMas.find("))");
-            if (end != -1) {
+            if (end != -1) 
+            {
                 elem += tempMas.substr(0, end);
                 tcoords.push_back(stof(elem));
                 tempMas.erase(0, end + 2);
                 length = tempMas.length();
                 i = 0;
                 count += 2;
-            } else 
+            } 
+            else 
             {
                 error(3, pos);
                 tcoords.clear();
                 return tcoords;
             }
-        } else 
+        } 
+        else 
         {
             error(4, str.find("))") + 2);
             tcoords.clear();
@@ -226,7 +243,6 @@ vector<float> triangleCoords(string& str)
         }
         pos++;
     }
-
     return tcoords;
 }
 
@@ -253,7 +269,8 @@ int main()
         if (figureName == "triangle") 
         {
             figureCoords = triangleCoords(s);
-        } else if (figureName == "circle") 
+        } 
+        else if (figureName == "circle") 
         {
             figureCoords = circleCoords(s);
         } 
