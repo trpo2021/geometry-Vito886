@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
+
+const float pi = 3.1415;
 
 void error(int code, int position)
 {
@@ -34,6 +37,19 @@ void error(int code, int position)
         cout << "Error at column " << position
              << ": expected '('; code = " << code << endl;
         break;
+    }
+}
+
+bool odz(string& item)
+{
+    if (((item < 48) || (item > 57)) && (item != 32) && (item != 44)
+        && (item != 45) && (item != 46)) 
+    {
+        return 1;
+    }
+    else 
+    {
+        return 0;
     }
 }
 
@@ -84,9 +100,7 @@ vector<float> circleCoords(string& str)
         elem = "";
         if (count < 2) 
         {
-            if (((tempMas[i] < 48) || (tempMas[i] > 57)) && (tempMas[i] != 32)
-                && (tempMas[i] != 44) && (tempMas[i] != 45)
-                && (tempMas[i] != 46)) 
+            if (odz(tempMas[i]) == 1) 
             {
                 error(2, pos);
                 ccoords.clear();
@@ -180,9 +194,7 @@ vector<float> triangleCoords(string& str)
         elem = "";
         if (count < 7) 
         {
-            if (((tempMas[i] < 48) || (tempMas[i] > 57)) && (tempMas[i] != 32)
-                && (tempMas[i] != 44) && (tempMas[i] != 45)
-                && (tempMas[i] != 46)) 
+            if (odz(tempMas[i]) == 1) 
             {
                 error(2, pos);
                 tcoords.clear();
@@ -244,6 +256,51 @@ vector<float> triangleCoords(string& str)
         pos++;
     }
     return tcoords;
+}
+
+float side1(vector<float>& coords)
+{
+    vector<float> c = coords;
+    float line = sqrt(pow(c[3] - c[1], 2) + pow(c[4] - c[2], 2));
+    return line;
+}
+
+float side2(vector<float>& coords)
+{
+    vector<float> c = coords;
+    float line = sqrt(pow(c[5] - c[3], 2) + pow(c[6] - c[4], 2));
+    return line;
+}
+
+float side3(vector<float>& coords)
+{
+    vector<float> c = coords;
+    float line = sqrt(pow(c[5] - c[1], 2) + pow(c[6] - c[2], 2));
+    return line;
+}
+
+float perim(vector<float>& coords) 
+{
+    vector<float> c = coords;
+
+    if (c.size() > 3)
+    {
+        float line1 = side1(c);
+        float line2 = side2(c);
+        float line3 = side3(c);  
+        if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2)) 
+        { 
+            return line1 + line2 + line3; 
+        } 
+        else
+        {
+            return 1; // выход с ошибкой
+        }
+    } 
+    else 
+    { 
+        return 2 * pi * c[2]; 
+    }
 }
 
 int main()
