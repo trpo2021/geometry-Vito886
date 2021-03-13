@@ -40,7 +40,7 @@ void error(int code, int position)
     }
 }
 
-bool odz(string& item)
+bool odz(char& item)
 {
     if (((item < 48) || (item > 57)) && (item != 32) && (item != 44)
         && (item != 45) && (item != 46)) 
@@ -194,7 +194,7 @@ vector<float> triangleCoords(string& str)
         elem = "";
         if (count < 7) 
         {
-            if (odz(tempMas[i]) == 1) 
+            if (odz(tempMas[i]) == 1)  
             {
                 error(2, pos);
                 tcoords.clear();
@@ -219,13 +219,21 @@ vector<float> triangleCoords(string& str)
             }
             if (tempMas[i] == ',') 
             {
-                elem += tempMas.substr(0, i);
-                tcoords.push_back(stof(elem));
-                tempMas.erase(0, i + 2);
-                length = tempMas.length();
-                i = 0;
-                count++;
-                pos += 2;
+                if (tempMas[i + 1] == ' ') 
+                {
+                    pos++;
+                } 
+                else 
+                {
+                    elem += tempMas.substr(0, i);
+                    tcoords.push_back(stof(elem));
+                    tempMas.erase(0, i + 2);
+                    length = tempMas.length();
+                    i = 0;
+                    count++;
+                    pos += 2;
+                }
+                
             }
         } 
         else if (count == 7) 
