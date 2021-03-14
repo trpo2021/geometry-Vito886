@@ -287,28 +287,39 @@ float side3(vector<float>& coords)
     return line;
 }
 
+bool isTriangle(vector<float>& coords) // проверяем, существует ли треугольник
+{
+    float line1 = side1(coords);
+    float line2 = side2(coords);
+    float line3 = side3(coords); 
+    // 2 любые стороны больше третьей, 1 и 2 координаты равны 7 и 8 (треуг замкнутый)
+    if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2) && (coords[0] == coords[6]) && (coords[1] == coords[7])) 
+    {
+        return 1;  // true
+    } 
+    else
+    {
+        return 0;
+    }
+}
+
 float perim(vector<float>& coords) 
 {
-    vector<float> c = coords;
-
-    if (c.size() > 3)
+    if (coords.size() > 3) 
     {
-        float line1 = side1(c);
-        float line2 = side2(c);
-        float line3 = side3(c);  
-        if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2)) 
-        { 
-            return line1 + line2 + line3; 
-        } 
-        else
-        {
-            return 1; // выход с ошибкой
-        }
+        return side1(coords) + side2(coords) + side3(coords); 
     } 
     else 
     { 
-        return 2 * pi * c[2]; 
+        return 2 * pi * coords[2];  
     }
+}
+
+float area(vector<float>& coords)
+{
+    float poluper = perim(coords)/2;
+    float square = sqrt(poluper * (poluper - side1(coords)) * (poluper - side2(coords)) * (poluper - side3(coords)));
+    return square;
 }
 
 int main()
@@ -358,6 +369,15 @@ int main()
         for (int j = 0; j < t2; j++) 
         {
             cout << figlist[i].second[j] << " ";
+        }
+        if (isTriangle(figlist[i].second) == 1) 
+        {
+            cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
+            cout << "   area = " << area(figlist[i].second) << endl;
+        } 
+        else
+        {
+            cout << endl << "Triangle is degenerate!" << endl;
         }
         cout << endl;
     }
