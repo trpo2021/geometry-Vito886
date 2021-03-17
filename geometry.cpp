@@ -281,24 +281,6 @@ float side3(vector<float>& coords)
     return sqrt(pow(coords[6] - coords[4], 2) + pow(coords[7] - coords[5], 2));
 }
 
-bool isTriangle(vector<float>& coords) // проверяем, существует ли треугольник
-{
-    float line1 = side1(coords);
-    float line2 = side2(coords);
-    float line3 = side3(coords); 
-    float max = max(line1, line2, line3);
-    
-    // 2 любые стороны больше третьей, 1 и 2 координаты равны 7 и 8 (треуг замкнутый)
-    if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2) && (coords[0] == coords[6]) && (coords[1] == coords[7])) 
-    {
-        return 1;  // true
-    } 
-    else
-    {
-        return 0;
-    }
-}
-
 float perim(vector<float>& coords) 
 {
     if (coords.size() > 3) 
@@ -313,9 +295,35 @@ float perim(vector<float>& coords)
 
 float area(vector<float>& coords)
 {
-    float poluper = perim(coords)/2;
-    float square = sqrt(poluper * (poluper - side1(coords)) * (poluper - side2(coords)) * (poluper - side3(coords)));
-    return square;
+    if (coords.size() > 3)
+    {
+        float poluper = perim(coords)/2;
+        float square = sqrt(poluper * (poluper - side1(coords)) * (poluper - side2(coords)) * (poluper - side3(coords)));
+        return square;
+    } 
+    else
+    {
+        return pi * pow(coords[2], 2);
+    }
+}
+
+bool isTriangle(vector<float>& coords) // проверяем, существует ли треугольник
+{
+    float line1 = side1(coords);
+    float line2 = side2(coords);
+    float line3 = side3(coords);
+    float maximum = fmax(fmax(line1, line2), line3); 
+
+    // 2 любые стороны больше третьей, 1 и 2 координаты равны 7 и 8 (треуг
+    // замкнутый)
+    if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2) && (coords[0] == coords[6]) && (coords[1] == coords[7]) && (maximum != perim(coords) / 2) && (area(coords) != 0))  
+    {
+        return 1; // true
+    } 
+    else
+    {
+        return 0;
+    }
 }
 
 int main()
@@ -366,14 +374,14 @@ int main()
         {
             cout << figlist[i].second[j] << " ";
         }
-        if (isTriangle(figlist[i].second) == 1) 
+        if ((figlist[i].first == "triangle") && (isTriangle(figlist[i].second) == 1) || (figlist[i].first == "circle")) 
         {
             cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
             cout << "   area = " << area(figlist[i].second) << endl;
         } 
         else
         {
-            cout << endl << "Triangle is degenerate!" << endl;
+            cout << endl << "Triangle does not exist!" << endl;
         }
         cout << endl;
     }
