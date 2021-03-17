@@ -268,23 +268,17 @@ vector<float> triangleCoords(string& str)
 
 float side1(vector<float>& coords)
 {
-    vector<float> c = coords;
-    float line = sqrt(pow(c[3] - c[1], 2) + pow(c[4] - c[2], 2));
-    return line;
+    return sqrt(pow(coords[2] - coords[0], 2) + pow(coords[3] - coords[1], 2));
 }
 
 float side2(vector<float>& coords)
 {
-    vector<float> c = coords;
-    float line = sqrt(pow(c[5] - c[3], 2) + pow(c[6] - c[4], 2));
-    return line;
+    return sqrt(pow(coords[4] - coords[2], 2) + pow(coords[5] - coords[3], 2));
 }
 
 float side3(vector<float>& coords)
 {
-    vector<float> c = coords;
-    float line = sqrt(pow(c[5] - c[1], 2) + pow(c[6] - c[2], 2));
-    return line;
+    return sqrt(pow(coords[6] - coords[4], 2) + pow(coords[7] - coords[5], 2));
 }
 
 bool isTriangle(vector<float>& coords) // проверяем, существует ли треугольник
@@ -292,6 +286,8 @@ bool isTriangle(vector<float>& coords) // проверяем, существует ли треугольник
     float line1 = side1(coords);
     float line2 = side2(coords);
     float line3 = side3(coords); 
+    float max = max(line1, line2, line3);
+    
     // 2 любые стороны больше третьей, 1 и 2 координаты равны 7 и 8 (треуг замкнутый)
     if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2) && (coords[0] == coords[6]) && (coords[1] == coords[7])) 
     {
