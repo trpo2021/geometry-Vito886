@@ -2,11 +2,10 @@
 #include <string>
 #include <vector>
 #include <cmath>
-#include <libgeometry/counting.h>
-#include <libgeometry/checks.h>
-using namespace std;
+#include <cstdlib>
+#include "counting.h"
 
-const float pi = 3.1415;
+using namespace std;
 
 void error(int code, int position)
 {
@@ -18,26 +17,26 @@ void error(int code, int position)
 
     switch (code) 
     {
-    case 1:
-        cout << "Error at column " << position
-             << "expected 'circle' or 'triangle'; code = " << code << endl;
-        break;
-    case 2:
-        cout << "Error at column " << position
-             << ": expected '<double>'; code = " << code << endl;
-        break;
-    case 3:
-        cout << "Error at column " << position
-             << ": expected ')'; code = " << code << endl;
-        break;
-    case 4:
-        cout << "Error at column " << position
-             << ": unexpected token; code = " << code << endl;
-        break;
-    case 5:
-        cout << "Error at column " << position
-             << ": expected '('; code = " << code << endl;
-        break;
+        case 1:
+            cout << "Error at column " << position
+                 << "expected 'circle' or 'triangle'; code = " << code << endl;
+            break;
+        case 2:
+            cout << "Error at column " << position
+                 << ": expected '<double>'; code = " << code << endl;
+            break;
+        case 3:
+            cout << "Error at column " << position
+                 << ": expected ')'; code = " << code << endl;
+            break;
+        case 4:
+            cout << "Error at column " << position
+                 << ": unexpected token; code = " << code << endl;
+            break;
+        case 5:
+            cout << "Error at column " << position
+                 << ": expected '('; code = " << code << endl;
+            break;
     }
 }
 
@@ -47,7 +46,7 @@ bool odz(char& item)
         && (item != 45) && (item != 46)) 
     {
         return 1;
-    }
+    } 
     else 
     {
         return 0;
@@ -58,7 +57,7 @@ string figName(string& s)
 {
     string name = "";
     int stringSize = s.length();
-    for (int i = 0; i < stringSize; i++)
+    for (int i = 0; i < stringSize; i++) 
     {
         s[i] = tolower(s[i]); // приводим к строчному регистру
     }
@@ -89,7 +88,7 @@ vector<float> circleCoords(string& str)
     {
         tempMas.erase(0, 1);
     } 
-    else
+    else 
     {
         error(5, 8);
         ccoords.clear();
@@ -113,7 +112,7 @@ vector<float> circleCoords(string& str)
                 {
                     pos++;
                 } 
-                else
+                else 
                 {
                     elem += tempMas.substr(0, i);
                     ccoords.push_back(stof(elem));
@@ -134,7 +133,7 @@ vector<float> circleCoords(string& str)
                 count++;
                 pos += 2;
             }
-        } 
+        }
         else if (count == 2) 
         {
             if (end != -1) 
@@ -195,7 +194,7 @@ vector<float> triangleCoords(string& str)
         elem = "";
         if (count < 7) 
         {
-            if (odz(tempMas[i]) == 1)  
+            if (odz(tempMas[i]) == 1) 
             {
                 error(2, pos);
                 tcoords.clear();
@@ -203,11 +202,11 @@ vector<float> triangleCoords(string& str)
             }
             if (tempMas[i] == ' ') 
             {
-                if (tempMas[i + 1] == ' ')
+                if (tempMas[i + 1] == ' ') 
                 {
                     pos++;
                 } 
-                else
+                else 
                 {
                     elem += tempMas.substr(0, i);
                     tcoords.push_back(stof(elem));
@@ -216,7 +215,7 @@ vector<float> triangleCoords(string& str)
                     i = 0;
                     count++;
                     pos++;
-                } 
+                }
             }
             if (tempMas[i] == ',') 
             {
@@ -234,7 +233,6 @@ vector<float> triangleCoords(string& str)
                     count++;
                     pos += 2;
                 }
-                
             }
         } 
         else if (count == 7) 
@@ -255,7 +253,7 @@ vector<float> triangleCoords(string& str)
                 tcoords.clear();
                 return tcoords;
             }
-        } 
+        }
         else 
         {
             error(4, str.find("))") + 2);
@@ -267,123 +265,24 @@ vector<float> triangleCoords(string& str)
     return tcoords;
 }
 
-float side1(vector<float>& coords)
-{
-    return sqrt(pow(coords[2] - coords[0], 2) + pow(coords[3] - coords[1], 2));
-}
-
-float side2(vector<float>& coords)
-{
-    return sqrt(pow(coords[4] - coords[2], 2) + pow(coords[5] - coords[3], 2));
-}
-
-float side3(vector<float>& coords)
-{
-    return sqrt(pow(coords[6] - coords[4], 2) + pow(coords[7] - coords[5], 2));
-}
-
-float perim(vector<float>& coords) 
-{
-    if (coords.size() > 3) 
-    {
-        return side1(coords) + side2(coords) + side3(coords); 
-    } 
-    else 
-    { 
-        return 2 * pi * coords[2];  
-    }
-}
-
-float area(vector<float>& coords)
-{
-    if (coords.size() > 3)
-    {
-        float poluper = perim(coords)/2;
-        float square = sqrt(poluper * (poluper - side1(coords)) * (poluper - side2(coords)) * (poluper - side3(coords)));
-        return square;
-    } 
-    else
-    {
-        return pi * pow(coords[2], 2);
-    }
-}
-
 bool isTriangle(vector<float>& coords) // провер€ем, существует ли треугольник
 {
     float line1 = side1(coords);
     float line2 = side2(coords);
-    float line3 = side3(coords);
-    float maximum = fmax(fmax(line1, line2), line3); 
+    float line3 = side3(coords); 
+    float maximum = fmax(fmax(line1, line2), line3);
 
     // 2 любые стороны больше третьей, 1 и 2 координаты равны 7 и 8 (треуг
     // замкнутый)
-    if ((line1 + line2 > line3) && (line2 + line3 > line1) && (line1 + line3 > line2) && (coords[0] == coords[6]) && (coords[1] == coords[7]) && (maximum != perim(coords) / 2) && (area(coords) != 0))  
+    if ((line1 + line2 > line3) && (line2 + line3 > line1)
+        && (line1 + line3 > line2) && (coords[0] == coords[6])
+        && (coords[1] == coords[7]) && (maximum != perim(coords) / 2)
+        && (area(coords) != 0)) 
     {
         return 1; // true
     } 
-    else
+    else 
     {
         return 0;
-    }
-}
-
-int main()
-{
-    setlocale(LC_CTYPE, "Russian");
-
-    vector<pair<string, vector<float>>> figlist;
-    string s;
-
-    cout << "«адайте фигуры" << endl;
-
-    while (getline(cin, s)) 
-    {
-        if (s == "") 
-        {
-            break;
-        }
-
-        vector<float> figureCoords;
-        string figureName = figName(s);
-        pair<string, vector<float>> figure;
-
-        if (figureName == "triangle") 
-        {
-            figureCoords = triangleCoords(s);
-        } 
-        else if (figureName == "circle") 
-        {
-            figureCoords = circleCoords(s);
-        } 
-        else 
-        {
-            error(1, 0);
-        }
-        if (figureCoords.size() > 0) 
-        {
-            figure.first = figureName;
-            figure.second = figureCoords;
-            figlist.push_back(figure);
-        }
-    }
-    int t1 = figlist.size();
-    for (int i = 0; i < t1; i++) 
-    {
-        cout << i + 1 << ". " << figlist[i].first << ": ";
-        int t2 = figlist[i].second.size();
-        for (int j = 0; j < t2; j++) 
-        {
-            cout << figlist[i].second[j] << " ";
-        }
-        if ((figlist[i].first == "triangle") && (isTriangle(figlist[i].second) == 1) || (figlist[i].first == "circle")) 
-        {
-            cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
-            cout << "   area = " << area(figlist[i].second) << endl;
-        } 
-        else
-        {
-            cout << endl << "Triangle does not exist!" << endl;
-        }
-        cout << endl;
     }
 }
