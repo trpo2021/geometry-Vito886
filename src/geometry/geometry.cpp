@@ -6,8 +6,6 @@
 #include <libgeometry/checks.h>
 using namespace std;
 
-const float pi = 3.1415;
-
 void error(int code, int position)
 {
     for (int i = 0; i < position; i++) 
@@ -375,7 +373,7 @@ int main()
         {
             cout << figlist[i].second[j] << " ";
         }
-        if ((figlist[i].first == "triangle") && (isTriangle(figlist[i].second) == 1) || (figlist[i].first == "circle")) 
+        if (((figlist[i].first == "triangle") && (isTriangle(figlist[i].second) == 1)) || (figlist[i].first == "circle")) 
         {
             cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
             cout << "   area = " << area(figlist[i].second) << endl;

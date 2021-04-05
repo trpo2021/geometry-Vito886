@@ -5,6 +5,7 @@
 #include <vector>
 
 using namespace std;
+const float pi = 3.1415;
 
 float side1(vector<float>& coords)
 {
