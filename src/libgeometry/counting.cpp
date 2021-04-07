@@ -24,26 +24,22 @@ float side3(vector<float>& coords)
 
 float perim(vector<float>& coords)
 {
-    if (coords.size() > 3) 
-    {
+    if (coords.size() > 3) {
         return side1(coords) + side2(coords) + side3(coords);
-    } 
-    else 
-    {
+    } else {
         return 2 * pi * coords[2];
     }
 }
 
 float area(vector<float>& coords)
 {
-    if (coords.size() > 3) 
-    {
+    if (coords.size() > 3) {
         float poluper = perim(coords) / 2;
-        float square = sqrt(poluper * (poluper - side1(coords)) * (poluper - side2(coords)) * (poluper - side3(coords)));
+        float square
+                = sqrt(poluper * (poluper - side1(coords))
+                       * (poluper - side2(coords)) * (poluper - side3(coords)));
         return square;
-    } 
-    else 
-    {
+    } else {
         return pi * pow(coords[2], 2);
     }
 }

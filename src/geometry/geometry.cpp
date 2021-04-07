@@ -1,11 +1,10 @@
+#include <cmath>
 #include <iostream>
+#include <libgeometry/checks.h>
+#include <libgeometry/counting.h>
 #include <string>
 #include <vector>
-#include <cmath>
-#include <libgeometry/counting.h>
-#include <libgeometry/checks.h>
 using namespace std;
-
 
 int main()
 {
@@ -16,10 +15,8 @@ int main()
 
     cout << "Задайте фигуры" << endl;
 
-    while (getline(cin, s)) 
-    {
-        if (s == "") 
-        {
+    while (getline(cin, s)) {
+        if (s == "") {
             break;
         }
 
@@ -27,44 +24,36 @@ int main()
         string figureName = figName(s);
         pair<string, vector<float>> figure;
 
-        if (figureName == "triangle") 
-        {
+        if (figureName == "triangle") {
             figureCoords = triangleCoords(s);
-        } 
-        else if (figureName == "circle") 
-        {
+        } else if (figureName == "circle") {
             figureCoords = circleCoords(s);
-        } 
-        else 
-        {
+        } else {
             error(1, 0);
         }
-        if (figureCoords.size() > 0) 
-        {
+        if (figureCoords.size() > 0) {
             figure.first = figureName;
             figure.second = figureCoords;
             figlist.push_back(figure);
         }
     }
     int t1 = figlist.size();
-    for (int i = 0; i < t1; i++) 
-    {
+    for (int i = 0; i < t1; i++) {
         cout << i + 1 << ". " << figlist[i].first << ": ";
         int t2 = figlist[i].second.size();
-        for (int j = 0; j < t2; j++) 
-        {
+        for (int j = 0; j < t2; j++) {
             cout << figlist[i].second[j] << " ";
         }
-        if (((figlist[i].first == "triangle") && (isTriangle(figlist[i].second) == 1)) || (figlist[i].first == "circle")) 
-        {
-            cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
+        if (((figlist[i].first == "triangle")
+             && (isTriangle(figlist[i].second) == 1))
+            || (figlist[i].first == "circle")) {
+            cout << endl
+                 << "   perimeter = " << perim(figlist[i].second) << endl;
             cout << "   area = " << area(figlist[i].second) << endl;
-        } 
-        else
-        {
+        } else {
             cout << endl << "Triangle does not exist!" << endl;
         }
         cout << endl;
     }
-    system ("pause");
+    system("pause");
 }
