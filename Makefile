@@ -3,8 +3,11 @@ CFLAGS= -c -Wall -Werror
 LIBG = obj/src/libgeometry
 GEO = obj/src/geometry
 
-bin/geometry.exe: $(GEO)/geometry.o $(LIBG)/counting.o $(LIBG)/checks.o 
+bin/geometry.exe: $(GEO)/geometry.o $(LIBG)/libgeometry.a 
 		$(CXX) -I src -Wall -Werror -o bin/geometry.exe $(GEO)/geometry.o $(LIBG)/counting.o $(LIBG)/checks.o
+
+$(LIBG)/libgeometry.a: $(LIBG)/checks.o $(LIBG)/counting.o
+		ar rcs $@ $^
 
 $(LIBG)/counting.o: src/libgeometry/counting.cpp
 		$(CXX) -I src $(CFLAGS) -MMD -o $(LIBG)/counting.o src/libgeometry/counting.cpp
