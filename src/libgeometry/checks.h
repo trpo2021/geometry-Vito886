@@ -4,13 +4,11 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 void error(int code, int position);
 bool odz(char& item);
-string figName(string& s);
-vector<float> circleCoords(string& str);
-vector<float> triangleCoords(string& str);
-bool isTriangle(vector<float>& coords);
+std::string figName(std::string& s);
+std::vector<float> circleCoords(std::string& str);
+std::vector<float> triangleCoords(std::string& str);
+bool isTriangle(std::vector<float>& coords);
 
 #endif // !CHECKS_H
