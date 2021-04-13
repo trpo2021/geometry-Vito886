@@ -24,9 +24,7 @@ int main()
         string figureName = figName(s);
         pair<string, vector<float>> figure;
 
-        if (figureName == "triangle") {
-            figureCoords = triangleCoords(s);
-        } else if (figureName == "circle") {
+        if (figureName == "circle") {
             figureCoords = circleCoords(s);
         } else {
             error(1, 0);
@@ -44,15 +42,9 @@ int main()
         for (int j = 0; j < t2; j++) {
             cout << figlist[i].second[j] << " ";
         }
-        if (((figlist[i].first == "triangle")
-             && (isTriangle(figlist[i].second) == 1))
-            || (figlist[i].first == "circle")) {
-            cout << endl
-                 << "   perimeter = " << perim(figlist[i].second) << endl;
-            cout << "   area = " << area(figlist[i].second) << endl;
-        } else {
-            cout << endl << "Triangle does not exist!" << endl;
-        }
+        cout << endl << "   perimeter = " << perim(figlist[i].second) << endl;
+        cout << "   area = " << area(figlist[i].second) << endl;
+
         cout << endl;
     }
     system("pause");
