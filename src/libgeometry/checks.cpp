@@ -40,8 +40,8 @@ void error(int code, int position)
 
 bool odz(char& item)
 {
-    if (((item < 48) || (item > 57)) && (item != 32) && (item != 44)
-        && (item != 45) && (item != 46)) {
+    if (((item < '0') || (item > '9')) && (item != ' ') && (item != ',')
+        && (item != '-') && (item != '.')) {
         return 1;
     } else {
         return 0;
