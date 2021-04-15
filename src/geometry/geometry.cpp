@@ -1,4 +1,4 @@
-#include <cmath>
+п»ї#include <cmath>
 #include <iostream>
 #include <libgeometry/checks.h>
 #include <libgeometry/counting.h>
@@ -13,7 +13,7 @@ int main()
     vector<pair<string, vector<float>>> figlist;
     string s;
 
-    cout << "Задайте фигуры" << endl;
+    cout << "Input figures" << endl;
 
     while (getline(cin, s)) {
         if (s == "") {
