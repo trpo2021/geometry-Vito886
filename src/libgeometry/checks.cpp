@@ -35,6 +35,10 @@ void error(int code, int position)
         cout << "Error at column " << position
              << ": expected '('; code = " << code << endl;
         break;
+    case 6:
+        cout << "Error at column " << position
+             << ": minus in radius; code = " << code << endl;
+        break;
     }
 }
 
@@ -118,11 +122,17 @@ vector<float> circleCoords(string& str)
         } else if (count == 2) {
             if (end != -1) {
                 elem += tempMas.substr(0, end);
-                ccoords.push_back(stof(elem));
-                tempMas.erase(0, end + 1);
-                length = tempMas.length();
-                i = 0;
-                count++;
+                if (stof(elem) < 0){
+                    error(6, pos);
+                    ccoords.clear();
+                    return ccoords;
+                } else {
+                    ccoords.push_back(stof(elem));
+                    tempMas.erase(0, end + 1);
+                    length = tempMas.length();
+                    i = 0;
+                    count++;
+                }
             } else {
                 error(3, pos);
                 ccoords.clear();

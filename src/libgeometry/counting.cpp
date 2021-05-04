@@ -6,7 +6,6 @@
 
 using namespace std;
 const float pi = 3.1415;
-
 float perim(vector<float>& coords)
 {
     return 2 * pi * coords[2];
@@ -26,9 +25,9 @@ vector<float> sqrSum(float a, float b)
     return resSqr;
 }
 
-vector<float> sqrEq(vector<float> coef)
+vector<float> QuadRoots(vector<float> coef) 
 {
-    vector<float> radical(0);
+    vector<float> roots(0);
     struct abc {
         float a;
         float b;
@@ -37,52 +36,52 @@ vector<float> sqrEq(vector<float> coef)
     abc arg = {coef[0], coef[1], coef[2]};
     float d = arg.b * arg.b - 4 * arg.a * arg.c;
     if (d < 0)
-        return radical;
+        return roots;
     else if (d > 0) {
-        radical.push_back((-arg.b + sqrt(d)) / (2 * arg.a));
-        radical.push_back((-arg.b - sqrt(d)) / (2 * arg.a));
-        return radical;
+        roots.push_back((-arg.b + sqrt(d)) / (2 * arg.a));
+        roots.push_back((-arg.b - sqrt(d)) / (2 * arg.a));
+        return roots;
     } else if (d == 0) {
-        radical.push_back(-arg.b / (2 * arg.a));
-        return radical;
+        roots.push_back(-arg.b / (2 * arg.a));
+        return roots;
     } else
-        return radical;
+        return roots;
 }
 
 bool cirToCir(vector<float> cir1, vector<float> cir2)
 {
-    bool cross = 0;
+    bool root = 0;
     int i;
     cir1[2] *= cir1[2];
     cir2[2] *= cir2[2];
-    vector<float> xone = sqrSum(1, cir1[0]);
-    vector<float> yone = sqrSum(1, cir1[1]);
+    vector<float> xfirst = sqrSum(1, cir1[0]);
+    vector<float> yfirst = sqrSum(1, cir1[1]);
     vector<float> xsec = sqrSum(1, cir2[0]);
     vector<float> ysec = sqrSum(1, cir2[1]);
-    vector<float> tx = xone;
-    tx[2] += yone[2] - cir1[2];
+    vector<float> tempx = xfirst;
+    tempx[2] += yfirst[2] - cir1[2];
     for (i = 0; i < 3; i++) {
-        xone[i] -= xsec[i];
-        yone[i] -= ysec[i];
+        xfirst[i] -= xsec[i];
+        yfirst[i] -= ysec[i];
     }
-    yone[2] += xone[2] - (cir1[2] - cir2[2]);
-    xone[2] = 0;
-    yone[2] = -yone[2];
+    yfirst[2] += xfirst[2] - (cir1[2] - cir2[2]);
+    xfirst[2] = 0;
+    yfirst[2] = -yfirst[2];
     vector<float> afterminus;
-    afterminus.push_back(xone[1]);
+    afterminus.push_back(xfirst[1]);
     for (i = 1; i < 3; i++)
-        afterminus.push_back(yone[i]);
+        afterminus.push_back(yfirst[i]); 
     vector<float> sqy = sqrSum(
             -afterminus[0] / afterminus[1], afterminus[2] / afterminus[1]);
     for (i = 0; i < 3; i++)
-        tx[i] += sqy[i];
-    tx[1] += -afterminus[0] / afterminus[1];
-    tx[2] += afterminus[2] / afterminus[1];
-    tx = sqrEq(tx);
-    if (tx.size() > 0)
-        return cross = 1;
+        tempx[i] += sqy[i];
+    tempx[1] += -afterminus[0] / afterminus[1];
+    tempx[2] += afterminus[2] / afterminus[1];
+    tempx = QuadRoots(tempx);
+    if (tempx.size() > 0)
+        return root = 1;
     else
-        return cross;
+        return root; 
 }
 
 vector<vector<int>> intersects(
