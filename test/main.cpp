@@ -98,11 +98,11 @@ TEST_CASE("cheks", "")
         CHECK(figName(a[2]) == "circl");
     }
     SECTION("circleCoords")
-    { 
-        std::string str1 = "circle(1 2, 3)";   
-        std::vector<float> a1 {1,2,3};
+    {
+        std::string str1 = "circle(1 2, 3)";
+        std::vector<float> a1{1, 2, 3};
         std::vector<float> tres1 = circleCoords(str1);
-        for (int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             CHECK(tres1[i] == a1[i]);
         }
         std::string str2 = "circle(-2.1 2.3, 4.2)";

@@ -122,7 +122,7 @@ vector<float> circleCoords(string& str)
         } else if (count == 2) {
             if (end != -1) {
                 elem += tempMas.substr(0, end);
-                if (stof(elem) < 0){
+                if (stof(elem) < 0) {
                     error(6, pos);
                     ccoords.clear();
                     return ccoords;
