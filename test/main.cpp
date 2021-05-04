@@ -50,15 +50,15 @@ TEST_CASE("for counting", "")
     {
         std::vector<float> a{-0.5, -1};
         std::vector<float> b{-0.60435, -2.89564};
-        std::vector<float> input1 {4, 6, 2};   
+        std::vector<float> input1{4, 6, 2};
         std::vector<float> temp1 = QuadRoots(input1);
         for (int i = 0; i < 2; i++) {
             CHECK(temp1[i] == Approx(a[i]));
         }
-        std::vector<float> input2 {1.2, 4.2, 2.1};
+        std::vector<float> input2{1.2, 4.2, 2.1};
         std::vector<float> temp2 = QuadRoots(input2);
         for (int i = 0; i < 2; i++) {
-            CHECK(temp2[i] == Approx(b[i])); 
+            CHECK(temp2[i] == Approx(b[i]));
         }
     }
 }
@@ -69,11 +69,48 @@ TEST_CASE("intersects", "")
     {
         std::vector<float> c1{0, 0, 2};
         std::vector<float> c2{1, 1, 2};
-        CHECK(cirToCir(c1, c2) == 1); 
-        std::vector<float> c3{9.3, -4.2, 2.8}; 
-        CHECK(cirToCir(c1, c3) == 0); 
-        std::vector<float> c4{9, -4.2, 2.8}; 
+        CHECK(cirToCir(c1, c2) == 1);
+        std::vector<float> c3{9.3, -4.2, 2.8};
+        CHECK(cirToCir(c1, c3) == 0);
+        std::vector<float> c4{9, -4.2, 2.8};
         CHECK(cirToCir(c1, c4) == 0);
+    }
+}
+TEST_CASE("cheks", "")
+{
+    SECTION("odz")
+    {
+        std::vector<char> a = {'g', '*', '1', ' ', ',', '.', '-'};
+        CHECK(odz(a[0]) == 1);
+        CHECK(odz(a[1]) == 1);
+        CHECK(odz(a[2]) == 0);
+        CHECK(odz(a[3]) == 0);
+        CHECK(odz(a[4]) == 0);
+        CHECK(odz(a[5]) == 0);
+        CHECK(odz(a[6]) == 0);
+    }
+    SECTION("figName")
+    {
+        std::vector<std::string> a
+                = {"Circle(1, 2, 3)", "cIrcLE(2, 3, 5)", "circl(2, 3, 5)"};
+        CHECK(figName(a[0]) == "circle");
+        CHECK(figName(a[1]) == "circle");
+        CHECK(figName(a[2]) == "circl");
+    }
+    SECTION("circleCoords")
+    { 
+        std::string str1 = "circle(1 2, 3)";   
+        std::vector<float> a1 {1,2,3};
+        std::vector<float> tres1 = circleCoords(str1);
+        for (int i=0; i<3; i++){
+            CHECK(tres1[i] == a1[i]);
+        }
+        std::string str2 = "circle(-2.1 2.3, 4.2)";
+        std::vector<float> a2{-2.1, 2.3, 4.2};
+        std::vector<float> tres2 = circleCoords(str2);
+        for (int i = 0; i < 3; i++) {
+            CHECK(tres2[i] == a2[i]);
+        }
     }
     system("PAUSE");
 }
