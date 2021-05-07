@@ -8,7 +8,7 @@ using namespace std;
 
 float perim(vector<float>& coords)
 {
-    return 2 * M_PI * coords[2]; 
+    return 2 * M_PI * coords[2];
 }
 
 float area(vector<float>& coords)
@@ -60,7 +60,7 @@ bool cirToCir(vector<float> cir1, vector<float> cir2)
     vector<float> ysec = sqrSum(1, cir2[1]);
     vector<float> tempx = xfirst;
     tempx[2] += yfirst[2] - cir1[2];
-    //float yfirstCoef = yfirst[1];
+    // float yfirstCoef = yfirst[1];
     for (i = 0; i < 3; i++) {
         xfirst[i] -= xsec[i];
         yfirst[i] -= ysec[i];
