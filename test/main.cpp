@@ -13,18 +13,18 @@ TEST_CASE("Counting circle", "")
         std::vector<float> a{1, 2, 2.2};
         std::vector<float> b{4.1, 2.12, 5.12};
         std::vector<float> c{1, 0, 3.31};
-        CHECK(perim(a) == Approx(13.8226));
-        CHECK(perim(b) == Approx(32.16896));
-        CHECK(perim(c) == Approx(20.79673));
+        CHECK(perim(a) == Approx(13.82301));
+        CHECK(perim(b) == Approx(32.16991));
+        CHECK(perim(c) == Approx(20.79734));
     }
     SECTION("area")
     {
         std::vector<float> a{1, 2, 2.2};
         std::vector<float> b{4.1, 2.12, 5.12};
         std::vector<float> c{1, 0, 3.31};
-        CHECK(area(a) == Approx(15.20486));
-        CHECK(area(b) == Approx(82.35253));
-        CHECK(area(c) == Approx(34.41859));
+        CHECK(area(a) == Approx(15.20531));
+        CHECK(area(b) == Approx(82.35497));
+        CHECK(area(c) == Approx(34.4196));
     }
 }
 TEST_CASE("for counting", "")

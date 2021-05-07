@@ -5,15 +5,15 @@
 #include <vector>
 
 using namespace std;
-const float pi = 3.1415;
+
 float perim(vector<float>& coords)
 {
-    return 2 * pi * coords[2];
+    return 2 * M_PI * coords[2]; 
 }
 
 float area(vector<float>& coords)
 {
-    return pi * pow(coords[2], 2);
+    return M_PI * pow(coords[2], 2);
 }
 
 vector<float> sqrSum(float a, float b)
@@ -60,7 +60,7 @@ bool cirToCir(vector<float> cir1, vector<float> cir2)
     vector<float> ysec = sqrSum(1, cir2[1]);
     vector<float> tempx = xfirst;
     tempx[2] += yfirst[2] - cir1[2];
-    float yfirstCoef = yfirst[1];
+    //float yfirstCoef = yfirst[1];
     for (i = 0; i < 3; i++) {
         xfirst[i] -= xsec[i];
         yfirst[i] -= ysec[i];
@@ -76,8 +76,8 @@ bool cirToCir(vector<float> cir1, vector<float> cir2)
             -afterminus[0] / afterminus[1], afterminus[2] / afterminus[1]);
     for (i = 0; i < 3; i++)
         tempx[i] += sqy[i];
-    tempx[1] += (-afterminus[0] / afterminus[1]) * yfirstCoef;
-    tempx[2] += (afterminus[2] / afterminus[1]) * yfirstCoef;
+    tempx[1] += -afterminus[0] / afterminus[1];
+    tempx[2] += afterminus[2] / afterminus[1];
     tempx = QuadRoots(tempx);
     if (tempx.size() > 0)
         return root = 1;

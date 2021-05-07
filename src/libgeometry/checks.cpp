@@ -44,12 +44,8 @@ void error(int code, int position)
 
 bool odz(char& item)
 {
-    if (((item < '0') || (item > '9')) && (item != ' ') && (item != ',')
-        && (item != '-') && (item != '.')) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return (((item < '0') || (item > '9')) && (item != ' ') && (item != ',')
+            && (item != '-') && (item != '.'));
 }
 
 string figName(string& s)
@@ -92,7 +88,7 @@ vector<float> circleCoords(string& str)
     for (int i = 0; i < length; i++) {
         elem = "";
         if (count < 2) {
-            if (odz(tempMas[i]) == 1) {
+            if (odz(tempMas[i]) == true) {
                 error(2, pos);
                 ccoords.clear();
                 return ccoords;

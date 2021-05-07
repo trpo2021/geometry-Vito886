@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-const float pi = 3.1415;
-
 float perim(std::vector<float>& coords);
 float area(std::vector<float>& coords);
 std::vector<float> sqrSum(float a, float b);
